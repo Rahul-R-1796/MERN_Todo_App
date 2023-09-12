@@ -59,6 +59,11 @@ app.post("/login", async (req, res) => {
     });
   };
 
+app.get("/", (req, res) => {
+  const mongoStatus = mongoose.connection.readyState === 1 ? "Connected" : "Disconnected";
+  res.json({ message: "Welcome to the MERN To-Do App API", mongoStatus });
+});
+
 app.get("/todos", async (req, res) => {
   const todos = await Todo.find();
   res.json(todos);
