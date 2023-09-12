@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Login from "./components/Login";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   useEffect(() => {
-    axios.get("/todos").then((res) => setTodos(res.data));
-  }, []);
+    if (isLoggedIn) {
+      axios.get("/todos").then((res) => setTodos(res.data));
+    }
+  }, [isLoggedIn]);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
 
   const addTodo = () => {
     axios.post("/todos", { text: newTodo, completed: false }).then((res) => {
