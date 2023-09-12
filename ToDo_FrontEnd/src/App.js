@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios.get("/todos").then((res) => setTodos(res.data));
+      axios.get("https://mern-todo-app-api-ow14.onrender.com/todos").then((res) => setTodos(res.data));
     }
   }, [isLoggedIn]);
 
@@ -23,14 +23,14 @@ function App() {
   };
 
   const addTodo = () => {
-    axios.post("/todos", { text: newTodo, completed: false }).then((res) => {
+    axios.post("https://mern-todo-app-api-ow14.onrender.com/todos", { text: newTodo, completed: false }).then((res) => {
       setTodos([...todos, res.data]);
       setNewTodo("");
     });
   };
 
   const updateTodo = (id, text, completed) => {
-    axios.put(`/todos/${id}`, { text, completed }).then((res) => {
+    axios.put(`https://mern-todo-app-api-ow14.onrender.com/todos/${id}`, { text, completed }).then((res) => {
       const updatedTodos = todos.map((todo) =>
         todo._id === id ? res.data : todo
       );
@@ -39,7 +39,7 @@ function App() {
   };
 
   const deleteTodo = (id) => {
-    axios.delete(`/todos/${id}`).then(() => {
+    axios.delete(`https://mern-todo-app-api-ow14.onrender.com/todos/${id}`).then(() => {
       const updatedTodos = todos.filter((todo) => todo._id !== id);
       setTodos(updatedTodos);
     });
